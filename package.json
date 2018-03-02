@@ -1,0 +1,23 @@
+{
+  "name": "ci-audio-player",
+  "version": "0.0.1",
+  "description": "CafeInit AudioPlayer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cafeinit/ci-audio-player.git"
+  },
+  "keywords": [
+    "audio",
+    "playlist"
+  ],
+  "author": "burning",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cafeinit/ci-audio-player/issues"
+  },
+  "homepage": "https://github.com/cafeinit/ci-audio-player#readme"
+}
