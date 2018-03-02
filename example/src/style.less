@@ -1,0 +1,75 @@
+/**
+ * @fileoverview style
+ * @author burning <www.cafeinit.com>
+ * @version 2018.03.02
+ */
+
+body {
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+#play-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: flex;
+    padding: 5px;
+    margin: 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  li.actived {
+    .title {
+      color: #f60000;
+    }
+  }
+
+  .track {
+    flex: 7;
+
+    .no {
+      display: block;
+      float: left;
+      margin: 0 10px 0 0;
+    }
+
+    .title {
+      margin: 0 0 5px 0;
+    }
+  }
+
+  .action {
+    flex: 3;
+  }
+}
+
+#player {
+  z-index: 500;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .btn-play, .btn-pause {
+    display: block;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: #000;
+  }
+
+  .btn-pause {
+    // display: none;
+  }
+}

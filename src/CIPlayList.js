@@ -33,6 +33,19 @@ class CIPlayList {
     this.list[index] = item
   }
 
+  setCurrentIndex(index) {
+    console.log('CIPlayList.setCurrentIndex', index)
+    this.index = index
+    this.list.forEach((item, i) => {
+      if (i === index) {
+        item.is_actived = true
+      }
+      else {
+        item.is_actived = false
+      }
+    })
+  }
+
   addItem(item) {
     item._key = parseInt(Math.random() * 100000000)
     this.list.push(item)

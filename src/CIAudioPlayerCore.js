@@ -12,22 +12,19 @@ class CIAudioPlayerCore {
   }
 
   play({ track, onPlay, onPlaying, onStop }) {
+    this.stop()
+
     if (typeof onPlay === 'function') {
       onPlay()
     }
 
-    if (this.timer) {
-      clearInterval(this.timer)
-      this.time = 0
-    }
     this.timer = setInterval(() => {
       if (typeof onPlaying === 'function') {
         onPlaying(this.time++)
       }
 
       if (this.time > track.duration) {
-        clearInterval(this.timer)
-        this.time = 0
+        this.stop()
         if (typeof onStop === 'function') {
           onStop()
         }
@@ -36,7 +33,10 @@ class CIAudioPlayerCore {
   }
 
   stop() {
-
+    if (this.timer) {
+      clearInterval(this.timer)
+      this.time = 0
+    }
   }
 }
 

@@ -39,13 +39,31 @@ class CIAudioPlayer {
     this.isLoop = val
   }
 
+  /**
+   * @param {Number} index PlayList的当前索引(点击PlayList的播放键)
+   */
   play(index) {
-    this.isPlaying = true
     if (typeof index === 'number') {
       this.index = parseInt(index) || 0
+      this.playList.setCurrentIndex(index)
+    }
+    else {
+      this.playList.setCurrentIndex(this.index)
+    }
+
+    // 单曲模式track中只有1条数据
+    if (this.mode === 1) {
+      this.index = 0
+      this.initTracks()
     }
 
     let track = this.getTrack(this.index)
+    if (!track) {
+      console.log('track', index, 'undefinded')
+      return
+    }
+
+    this.isPlaying = true
     this.player.play({
       track: track,
       onPlay: () => {
@@ -77,10 +95,7 @@ class CIAudioPlayer {
         this.play()
       }
       else {
-        this.isPlaying = false
-        if (typeof this.onStop === 'function') {
-          this.onStop(this.index)
-        }
+        this.stop()
       }
     }
     else {
@@ -89,14 +104,15 @@ class CIAudioPlayer {
     }
   }
 
-  // stop() {
-  //   // this.player.stop()
-  //   if (typeof this.onStop === 'function') {
-  //     this.onStop(this.index)
-  //   }
-  // }
+  stop() {
+    this.player.stop()
+    this.isPlaying = false
+    if (typeof this.onStop === 'function') {
+      this.onStop(this.index)
+    }
+  }
 
-  initTracks() {
+  initTracks(index) {
     if (this.mode === 1) {    // 单曲
       this.tracks = [ this.playList.getCurrentItem() ]
     }
@@ -106,7 +122,7 @@ class CIAudioPlayer {
     else if (this.mode === 3) {   // 随机
       this.tracks = this.playList.getItems(true)
     }
-    // console.log('CIAudioPlayer.initTracks', this.mode, this.tracks)
+    console.log('CIAudioPlayer.initTracks', this.mode, this.playList, this.tracks)
   }
 
   getTrack(index) {
