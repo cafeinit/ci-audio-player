@@ -14,24 +14,24 @@ const myPlayer = new CIAudioPlayer()
 
 $(() => {
   myPlayList.addItem({
-    title: 'TRACK TITLE 01',
-    src: 'http://...',
-    image: 'http://...',
-    duration: parseInt(0.025 * 60),
-    artist: 'ARTIST NAME',
+    title: 'Cold Violet Skies',
+    src: 'http://m128.xiami.net/13/103013/488558/1770746870_2958111_l.mp3?auth_key=1520823600-0-0-2e8c724e64a03d0f43acfadd7acde87e',
+    image: 'http://pic.xiami.net/images/album/img13/103013/4885581326345732.jpg?x-oss-process=image/resize,limit_0,m_pad,w_185,h_185',
+    duration: parseInt(3.5 * 60),
+    artist: 'Loolacoma',
   })
 
   myPlayList.addItem({
-    title: 'TRACK TITLE 02',
-    src: 'http://...',
-    image: 'http://...',
-    duration: parseInt(0.1 * 60),
-    artist: 'ARTIST NAME',
+    title: 'I Wanted You To Stay On the Other (Side)',
+    src: 'http://m192.xiami.net/492/93492/507167/1770943493_3204894_l.mp3?auth_key=1520823600-0-0-0435768c8231972b4fb7ab7ef02e7bbd',
+    image: 'http://pic.xiami.net/images/album/img93/332993/1334332993.jpg?x-oss-process=image/resize,limit_0,m_pad,w_185,h_185',
+    duration: parseInt(4 * 60),
+    artist: 'Summer Heart',
   })
 
   myPlayList.addItem({
     title: 'TRACK TITLE 03',
-    src: 'http://...',
+    src: 'http://pic.xiami.net/images/album/img93/332993/1334332993.jpg?x-oss-process=image/resize,limit_0,m_pad,w_185,h_185',
     image: 'http://...',
     duration: parseInt(0.05 * 60),
     artist: 'ARTIST NAME',
@@ -162,4 +162,14 @@ window.playerPlayButtonOnClick = () => {
 window.playerPauseButtonOnClick = () => {
   console.log('playerPauseButtonOnClick')
   myPlayer.stop()
+}
+
+window.playerPrevButtonOnClick = () => {
+  console.log('playerPrevButtonOnClick')
+  myPlayer.playPrev()
+}
+
+window.playerNextButtonOnClick = () => {
+  console.log('playerPauseButtonOnClick')
+  myPlayer.playNext()
 }

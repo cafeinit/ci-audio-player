@@ -10556,27 +10556,47 @@ class CIAudioPlayer {
       return
     }
 
-    this.isPlaying = true
-    this.player.play({
-      track: track,
-      onPlay: () => {
-        // console.log('TRACK PLAY', this.index, track.title)
-        if (typeof this.onTrackPlay === 'function') {
-          this.onTrackPlay(this.index, track)
-        }
-      },
-
-      onPlaying: (time) => {
-        // console.log('TRACK PLAYING', track.duration - time)
-        if (typeof this.onTrackPlaying === 'function') {
-          this.onTrackPlaying(this.index, track, time)
-        }
-      },
-
-      onStop: () => {
-        this.playNext()
+    let player = this.player
+    player.onPlay = evt => {
+      this.isPlaying = true
+      // console.log('TRACK PLAY', this.index, track.title, evt)
+      if (typeof this.onTrackPlay === 'function') {
+        this.onTrackPlay(this.index, track)
       }
-    })
+    }
+
+    player.onPlaying = (evt, time) => {
+      console.log('TRACK PLAYING', track.duration - time, evt)
+      // console.log('TRACK PLAYING', evt)
+      // if (typeof this.onTrackPlaying === 'function') {
+      //   this.onTrackPlaying(this.index, track, time)
+      // }
+    }
+
+    player.onEnded = evt => {
+      console.log('TRACK Ended', evt)
+      this.playNext()
+    }
+
+    player.play(track)
+  }
+
+  playPrev() {
+    let index = this.index - 1
+    if (index < 0) {
+      if (this.isLoop) {
+        index = this.tracks.length - 1
+        this.index = index
+        this.play()
+      }
+      else {
+        this.stop()
+      }
+    }
+    else {
+      this.index = index
+      this.play()
+    }
   }
 
   playNext() {
@@ -10615,7 +10635,7 @@ class CIAudioPlayer {
     else if (this.mode === 3) {   // 随机
       this.tracks = this.playList.getItems(true)
     }
-    console.log('CIAudioPlayer.initTracks', this.mode, this.playList, this.tracks)
+    // console.log('CIAudioPlayer.initTracks', this.mode, this.playList, this.tracks)
   }
 
   getTrack(index) {
@@ -10725,24 +10745,24 @@ const myPlayer = new __WEBPACK_IMPORTED_MODULE_1__src_CIAudioPlayer___default.a(
 
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
   myPlayList.addItem({
-    title: 'TRACK TITLE 01',
-    src: 'http://...',
-    image: 'http://...',
-    duration: parseInt(0.025 * 60),
-    artist: 'ARTIST NAME',
+    title: 'Cold Violet Skies',
+    src: 'http://m128.xiami.net/13/103013/488558/1770746870_2958111_l.mp3?auth_key=1520823600-0-0-2e8c724e64a03d0f43acfadd7acde87e',
+    image: 'http://pic.xiami.net/images/album/img13/103013/4885581326345732.jpg?x-oss-process=image/resize,limit_0,m_pad,w_185,h_185',
+    duration: parseInt(3.5 * 60),
+    artist: 'Loolacoma',
   })
 
   myPlayList.addItem({
-    title: 'TRACK TITLE 02',
-    src: 'http://...',
-    image: 'http://...',
-    duration: parseInt(0.1 * 60),
-    artist: 'ARTIST NAME',
+    title: 'I Wanted You To Stay On the Other (Side)',
+    src: 'http://m192.xiami.net/492/93492/507167/1770943493_3204894_l.mp3?auth_key=1520823600-0-0-0435768c8231972b4fb7ab7ef02e7bbd',
+    image: 'http://pic.xiami.net/images/album/img93/332993/1334332993.jpg?x-oss-process=image/resize,limit_0,m_pad,w_185,h_185',
+    duration: parseInt(4 * 60),
+    artist: 'Summer Heart',
   })
 
   myPlayList.addItem({
     title: 'TRACK TITLE 03',
-    src: 'http://...',
+    src: 'http://pic.xiami.net/images/album/img93/332993/1334332993.jpg?x-oss-process=image/resize,limit_0,m_pad,w_185,h_185',
     image: 'http://...',
     duration: parseInt(0.05 * 60),
     artist: 'ARTIST NAME',
@@ -10875,6 +10895,16 @@ window.playerPauseButtonOnClick = () => {
   myPlayer.stop()
 }
 
+window.playerPrevButtonOnClick = () => {
+  console.log('playerPrevButtonOnClick')
+  myPlayer.playPrev()
+}
+
+window.playerNextButtonOnClick = () => {
+  console.log('playerPauseButtonOnClick')
+  myPlayer.playNext()
+}
+
 
 /***/ }),
 /* 5 */
@@ -10885,7 +10915,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "/**\n * @fileoverview style\n * @author burning <www.cafeinit.com>\n * @version 2018.03.02\n */\nbody {\n  position: relative;\n  padding: 0;\n  margin: 0;\n}\n#play-list {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n#play-list li {\n  display: flex;\n  padding: 5px;\n  margin: 0;\n  border-bottom: 1px solid #eee;\n}\n#play-list li.actived .title {\n  color: #f60000;\n}\n#play-list .track {\n  flex: 7;\n}\n#play-list .track .no {\n  display: block;\n  float: left;\n  margin: 0 10px 0 0;\n}\n#play-list .track .title {\n  margin: 0 0 5px 0;\n}\n#play-list .action {\n  flex: 3;\n}\n#player {\n  z-index: 500;\n  position: fixed;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  padding: 10px;\n  background-color: rgba(0, 0, 0, 0.75);\n  color: #fff;\n}\n#player a {\n  color: #fff;\n  text-decoration: none;\n}\n#player .btn-play,\n#player .btn-pause {\n  display: block;\n  padding: 10px;\n  border-radius: 10px;\n  border-color: #000;\n}\n", ""]);
+exports.push([module.i, "/**\n * @fileoverview style\n * @author burning <www.cafeinit.com>\n * @version 2018.03.02\n */\nbody {\n  position: relative;\n  padding: 0;\n  margin: 0;\n}\n#play-list {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n#play-list li {\n  display: flex;\n  padding: 5px;\n  margin: 0;\n  border-bottom: 1px solid #eee;\n}\n#play-list li.actived .title {\n  color: #f60000;\n}\n#play-list .track {\n  flex: 7;\n}\n#play-list .track .no {\n  display: block;\n  float: left;\n  margin: 0 10px 0 0;\n}\n#play-list .track .title {\n  margin: 0 0 5px 0;\n}\n#play-list .action {\n  flex: 3;\n}\n#player {\n  z-index: 500;\n  position: fixed;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  padding: 10px;\n  background-color: rgba(0, 0, 0, 0.75);\n  color: #fff;\n}\n#player a {\n  color: #fff;\n  text-decoration: none;\n}\n#player .btn {\n  display: block;\n  float: left;\n  padding: 5px 10px;\n  margin-right: 10px;\n  border-radius: 10px;\n  background-color: #000;\n}\n", ""]);
 
 // exports
 
@@ -11459,39 +11489,75 @@ module.exports = function (css) {
  * @version 2018.03.01
  */
 
+// http://www.w3school.com.cn/tags/html_ref_audio_video_dom.asp
+
 // 只是简单地模拟播放过程
 class CIAudioPlayerCore {
   constructor() {
-    this.time = 0
-    this.timer = null
+    this.getAudio()
+    // console.log('CIAudioPlayerCore.audio', this.audio)
+    this.onPlay = null
+    this.onPlaying = null
+    this.onEnded = null
+    this.onError = null
   }
 
-  play({ track, onPlay, onPlaying, onStop }) {
-    this.stop()
+  getAudio() {
+    if (!this.audio) {
+      this.audio = new Audio()
+    }
+    return this.audio
+  }
 
-    if (typeof onPlay === 'function') {
-      onPlay()
+  play(track) {
+    let audio = this.getAudio()
+
+    audio.onplay = evt => {
+      console.log('CIAudioPlayerCore.onplay', evt)
+      if (typeof this.onPlay === 'function') {
+        this.onPlay(evt)
+      }
     }
 
-    this.timer = setInterval(() => {
-      if (typeof onPlaying === 'function') {
-        onPlaying(this.time++)
+    audio.ontimeupdate = evt => {
+      // console.log('CIAudioPlayerCore.ontimeupdate', evt)
+      if (typeof this.onPlaying === 'function') {
+        this.onPlaying(evt, audio.currentTime)
       }
+    }
 
-      if (this.time > track.duration) {
-        this.stop()
-        if (typeof onStop === 'function') {
-          onStop()
-        }
+    // 当音频已暂停时
+    audio.onpause = evt => {
+      console.log('CIAudioPlayerCore.onpause', evt)
+      // if (typeof onEnded === 'function') {
+      //   onEnded(evt)
+      // }
+    }
+
+    // 当目前的播放列表已结束时
+    audio.onended = evt => {
+      console.log('CIAudioPlayerCore.onended', evt)
+      if (typeof this.onEnded === 'function') {
+        this.onEnded(evt)
       }
-    }, 1000)
+    }
+
+    audio.onerror = evt => {
+      console.log('CIAudioPlayerCore.onerror', evt)
+      if (typeof this.onEnded === 'function') {
+        this.onEnded(evt)
+      }
+    }
+
+    if (track.src && track.src !== audio.src) {
+      audio.src = track.src
+      audio.play()
+    }
   }
 
   stop() {
-    if (this.timer) {
-      clearInterval(this.timer)
-      this.time = 0
-    }
+    let audio = this.getAudio()
+    audio.pause()
   }
 }
 

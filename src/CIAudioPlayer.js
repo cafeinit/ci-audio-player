@@ -1,7 +1,7 @@
 /**
  * @fileoverview CIAudioPlayer
  * @author burning <www.cafeinit.com>
- * @version 2018.03.01
+ * @version 2018.03.05
  */
 
 const CIAudioPlayerCore = require('./CIAudioPlayerCore')
@@ -63,27 +63,47 @@ class CIAudioPlayer {
       return
     }
 
-    this.isPlaying = true
-    this.player.play({
-      track: track,
-      onPlay: () => {
-        // console.log('TRACK PLAY', this.index, track.title)
-        if (typeof this.onTrackPlay === 'function') {
-          this.onTrackPlay(this.index, track)
-        }
-      },
-
-      onPlaying: (time) => {
-        // console.log('TRACK PLAYING', track.duration - time)
-        if (typeof this.onTrackPlaying === 'function') {
-          this.onTrackPlaying(this.index, track, time)
-        }
-      },
-
-      onStop: () => {
-        this.playNext()
+    let player = this.player
+    player.onPlay = evt => {
+      this.isPlaying = true
+      // console.log('TRACK PLAY', this.index, track.title, evt)
+      if (typeof this.onTrackPlay === 'function') {
+        this.onTrackPlay(this.index, track)
       }
-    })
+    }
+
+    player.onPlaying = (evt, time) => {
+      console.log('TRACK PLAYING', track.duration - time, evt)
+      // console.log('TRACK PLAYING', evt)
+      // if (typeof this.onTrackPlaying === 'function') {
+      //   this.onTrackPlaying(this.index, track, time)
+      // }
+    }
+
+    player.onEnded = evt => {
+      console.log('TRACK Ended', evt)
+      this.playNext()
+    }
+
+    player.play(track)
+  }
+
+  playPrev() {
+    let index = this.index - 1
+    if (index < 0) {
+      if (this.isLoop) {
+        index = this.tracks.length - 1
+        this.index = index
+        this.play()
+      }
+      else {
+        this.stop()
+      }
+    }
+    else {
+      this.index = index
+      this.play()
+    }
   }
 
   playNext() {
@@ -122,7 +142,7 @@ class CIAudioPlayer {
     else if (this.mode === 3) {   // 随机
       this.tracks = this.playList.getItems(true)
     }
-    console.log('CIAudioPlayer.initTracks', this.mode, this.playList, this.tracks)
+    // console.log('CIAudioPlayer.initTracks', this.mode, this.playList, this.tracks)
   }
 
   getTrack(index) {
