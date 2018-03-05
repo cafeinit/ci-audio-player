@@ -151,7 +151,7 @@ function renderPlayer($el, data) {
 
 window.trackPlayButtonOnClick = (index) => {
   console.log('trackPlayButtonOnClick', index)
-  myPlayer.play(index)
+  myPlayer.play({ index })
 }
 
 window.playerPlayButtonOnClick = () => {

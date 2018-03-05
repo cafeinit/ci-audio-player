@@ -59,7 +59,7 @@ class CIAudioPlayer {
 
     let track = this.getTrack(this.index)
     if (!track) {
-      console.log('track', index, 'undefinded')
+      // console.log('track', index, 'undefinded')
       if (typeof this.onError === 'function') {
         this.onError(`Track ${index} undefinded`)
       }
@@ -106,9 +106,7 @@ class CIAudioPlayer {
       }
     }
 
-    console.log(111111)
     player.play(track)
-    console.log(222222)
   }
 
   playPrev() {
@@ -159,7 +157,15 @@ class CIAudioPlayer {
    * @param {Number} progress [0, 1]
    */
   gotoAndPlay(progress) {
-    this.player.gotoAndPlay(progress)
+    // if (this.isPlaying) {
+    //   console.log('goto')
+    //   this.player.goto(progress)
+    // }
+    // else {
+    //   console.log('gotoAndPlay')
+    //   this.play({ progress })
+    // }
+    this.player.goto(progress)
   }
 
   initTracks(index) {

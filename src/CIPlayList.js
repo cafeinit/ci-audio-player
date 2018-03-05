@@ -34,7 +34,7 @@ class CIPlayList {
   }
 
   setCurrentIndex(index) {
-    console.log('CIPlayList.setCurrentIndex', index)
+    // console.log('CIPlayList.setCurrentIndex', index)
     this.index = index
     this.list.forEach((item, i) => {
       if (i === index) {

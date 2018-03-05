@@ -64,9 +64,9 @@ class CIAudioPlayerCore {
     if (track.src && track.src !== player.currentSrc) {
       player.src = track.src
     }
-    console.log('aaaaa')
+
+    console.log('CIAudioPlayerCore.play')
     player.play()
-    console.log('bbbbb')
   }
 
   pause() {
@@ -77,11 +77,10 @@ class CIAudioPlayerCore {
   /**
    * @param {Number} progress [0, 1]
    */
-  gotoAndPlay(progress) {
+  goto(progress) {
     let player = this.getPlayer()
-    if (player.currentSrc) {
-      player.currentTime = player.duration * progress
-    }
+    player.currentTime = player.duration * progress || 0
+    // console.log('CIAudioPlayerCore.goto', progress, player.currentTime)
   }
 }
 

@@ -10552,7 +10552,7 @@ class CIAudioPlayer {
 
     let track = this.getTrack(this.index)
     if (!track) {
-      console.log('track', index, 'undefinded')
+      // console.log('track', index, 'undefinded')
       if (typeof this.onError === 'function') {
         this.onError(`Track ${index} undefinded`)
       }
@@ -10599,9 +10599,7 @@ class CIAudioPlayer {
       }
     }
 
-    console.log(111111)
     player.play(track)
-    console.log(222222)
   }
 
   playPrev() {
@@ -10652,7 +10650,15 @@ class CIAudioPlayer {
    * @param {Number} progress [0, 1]
    */
   gotoAndPlay(progress) {
-    this.player.gotoAndPlay(progress)
+    // if (this.isPlaying) {
+    //   console.log('goto')
+    //   this.player.goto(progress)
+    // }
+    // else {
+    //   console.log('gotoAndPlay')
+    //   this.play({ progress })
+    // }
+    this.player.goto(progress)
   }
 
   initTracks(index) {
@@ -10716,7 +10722,7 @@ class CIPlayList {
   }
 
   setCurrentIndex(index) {
-    console.log('CIPlayList.setCurrentIndex', index)
+    // console.log('CIPlayList.setCurrentIndex', index)
     this.index = index
     this.list.forEach((item, i) => {
       if (i === index) {
@@ -10912,7 +10918,7 @@ function renderPlayer($el, data) {
 
 window.trackPlayButtonOnClick = (index) => {
   console.log('trackPlayButtonOnClick', index)
-  myPlayer.play(index)
+  myPlayer.play({ index })
 }
 
 window.playerPlayButtonOnClick = () => {
@@ -11585,9 +11591,9 @@ class CIAudioPlayerCore {
     if (track.src && track.src !== player.currentSrc) {
       player.src = track.src
     }
-    console.log('aaaaa')
+
+    console.log('CIAudioPlayerCore.play')
     player.play()
-    console.log('bbbbb')
   }
 
   pause() {
@@ -11598,11 +11604,10 @@ class CIAudioPlayerCore {
   /**
    * @param {Number} progress [0, 1]
    */
-  gotoAndPlay(progress) {
+  goto(progress) {
     let player = this.getPlayer()
-    if (player.currentSrc) {
-      player.currentTime = player.duration * progress
-    }
+    player.currentTime = player.duration * progress || 0
+    // console.log('CIAudioPlayerCore.goto', progress, player.currentTime)
   }
 }
 
