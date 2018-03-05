@@ -6,5 +6,27 @@
   </head>
   <body>
     <h1>CIAudioPlayer</h1>
+    <ul id="play-list"></ul>
+    <div id="player">
+      <div class="status"></div>
+      <div class="image"></div>
+      <div class="buttons">
+        <a class="btn btn-prev" href="javascript:;" onclick="playerPrevButtonOnClick()">Prev</a>
+        <a class="btn btn-play" href="javascript:;" onclick="playerPlayButtonOnClick()">Play</a>
+        <a class="btn btn-pause" href="javascript:;" onclick="playerPauseButtonOnClick()">Pause</a>
+
+        <a class="btn btn-test" href="javascript:;" onclick="playerPauseButtonOnClick()">Test</a>
+
+        <a class="btn btn-next" href="javascript:;" onclick="playerNextButtonOnClick()">Next</a>
+      </div>
+
+      <span class="time"></span>
+      <span class="progress"></span>
+
+      <div class="progress-bar">
+        <button class="btn-progress" onclick="playerProgressButtonOnClick()">test</button>
+      </div>
+    </div>
+    <script src="./app.bundle.js?v=0.3.17"></script>
   </body>
 </html>

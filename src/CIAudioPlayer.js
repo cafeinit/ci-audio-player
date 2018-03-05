@@ -14,15 +14,15 @@ class CIAudioPlayer {
     this.mode = 2         // 1:单曲播放 2:顺序播放 3:随机播放
     this.isLoop = true    // 是否循环播放
     this.isPlaying = false
+    this.currentTime = 0
+    this.duration = 0
+    this.progress = 0
 
     this.player = new CIAudioPlayerCore()
 
-    this.onPlay = null
-    this.onStop = null
-
+    this.onPause = null
     this.onTrackPlay = null
     this.onTrackPlaying = null
-    this.onTrackStop = null
   }
 
   setPlayList(list) {
@@ -60,24 +60,39 @@ class CIAudioPlayer {
     let track = this.getTrack(this.index)
     if (!track) {
       console.log('track', index, 'undefinded')
+      if (typeof this.onError === 'function') {
+        this.onError(`Track ${index} undefinded`)
+      }
       return
     }
 
     let player = this.player
-    player.onPlay = evt => {
+    player.onPlay = (evt, currentTime, duration) => {
       this.isPlaying = true
+      this.currentTime = currentTime
+      this.duration = duration
+      this.progress = 0
       // console.log('TRACK PLAY', this.index, track.title, evt)
       if (typeof this.onTrackPlay === 'function') {
         this.onTrackPlay(this.index, track)
       }
     }
 
-    player.onPlaying = (evt, time, duration) => {
-      console.log('TRACK PLAYING', duration - time, duration, evt)
-      // console.log('TRACK PLAYING', evt)
-      // if (typeof this.onTrackPlaying === 'function') {
-      //   this.onTrackPlaying(this.index, track, time)
-      // }
+    player.onPlaying = (evt, currentTime, duration) => {
+      // console.log('TRACK PLAYING', duration - time, duration, evt)
+      if (typeof this.onTrackPlaying === 'function') {
+        let progress = 0
+        if (duration > 0) {
+          progress = currentTime / duration
+          progress = progress > 1 ? 1 : progress
+        }
+        this.currentTime = currentTime
+        this.duration = duration
+        this.progress = progress
+        this.onTrackPlaying(this.index, track,
+          { currentTime, duration, progress }
+        )
+      }
     }
 
     player.onEnded = evt => {
@@ -85,7 +100,15 @@ class CIAudioPlayer {
       this.playNext()
     }
 
+    player.onError = evt => {
+      if (typeof this.onError === 'function') {
+        this.onError(this.index, evt)
+      }
+    }
+
+    console.log(111111)
     player.play(track)
+    console.log(222222)
   }
 
   playPrev() {
@@ -124,11 +147,11 @@ class CIAudioPlayer {
     }
   }
 
-  stop() {
-    this.player.stop()
+  pause() {
+    this.player.pause()
     this.isPlaying = false
-    if (typeof this.onStop === 'function') {
-      this.onStop(this.index)
+    if (typeof this.onPause === 'function') {
+      this.onPause(this.index)
     }
   }
 

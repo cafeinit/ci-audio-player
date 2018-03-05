@@ -28,59 +28,60 @@ class CIAudioPlayerCore {
     let player = this.getPlayer()
 
     player.onplay = evt => {
-      console.log('CIAudioPlayerCore.onplay', evt)
+      // console.log('CIAudioPlayerCore.onplay', evt)
       if (typeof this.onPlay === 'function') {
-        this.onPlay(evt)
+        this.onPlay(evt, player.currentTime || 0, player.duration || 0)
       }
     }
 
     player.ontimeupdate = evt => {
       // console.log('CIAudioPlayerCore.ontimeupdate', evt)
       if (typeof this.onPlaying === 'function') {
-        this.onPlaying(evt, player.currentTime, player.duration)
+        this.onPlaying(evt, player.currentTime || 0, player.duration || 0)
       }
     }
 
     // 当音频已暂停时
-    player.onpause = evt => {
-      console.log('CIAudioPlayerCore.onpause', evt)
-      // if (typeof onEnded === 'function') {
-      //   onEnded(evt)
-      // }
-    }
+    // player.onpause = evt => {
+    //   console.log('CIAudioPlayerCore.onpause', evt)
+    // }
 
     // 当目前的播放列表已结束时
     player.onended = evt => {
-      console.log('CIAudioPlayerCore.onended', evt)
+      // console.log('CIAudioPlayerCore.onended', evt)
       if (typeof this.onEnded === 'function') {
         this.onEnded(evt)
       }
     }
 
     player.onerror = evt => {
-      console.log('CIAudioPlayerCore.onerror', evt)
-      if (typeof this.onEnded === 'function') {
-        this.onEnded(evt)
+      // console.log('CIAudioPlayerCore.onerror', evt)
+      if (typeof this.onError === 'function') {
+        this.onError(evt)
       }
     }
 
     if (track.src && track.src !== player.currentSrc) {
       player.src = track.src
-      player.play()
     }
+    console.log('aaaaa')
+    player.play()
+    console.log('bbbbb')
   }
 
-  stop() {
-    let audio = this.getPlayer()
-    audio.pause()
+  pause() {
+    let player = this.getPlayer()
+    player.pause()
   }
 
   /**
    * @param {Number} progress [0, 1]
    */
   gotoAndPlay(progress) {
-    console.log('gotoAndPlay', progress, this.player.duration * progress)
-    this.player.currentTime = this.player.duration * progress
+    let player = this.getPlayer()
+    if (player.currentSrc) {
+      player.currentTime = player.duration * progress
+    }
   }
 }
 

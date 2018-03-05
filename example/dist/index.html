@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <title>CIAudioPlayer</title>
   </head>
   <body>
@@ -14,14 +15,19 @@
         <a class="btn btn-prev" href="javascript:;" onclick="playerPrevButtonOnClick()">Prev</a>
         <a class="btn btn-play" href="javascript:;" onclick="playerPlayButtonOnClick()">Play</a>
         <a class="btn btn-pause" href="javascript:;" onclick="playerPauseButtonOnClick()">Pause</a>
+
+        <a class="btn btn-test" href="javascript:;" onclick="playerPauseButtonOnClick()">Test</a>
+
         <a class="btn btn-next" href="javascript:;" onclick="playerNextButtonOnClick()">Next</a>
       </div>
 
+      <span class="time"></span>
+      <span class="progress"></span>
+
       <div class="progress-bar">
-        <input class="progress" />
         <button class="btn-progress" onclick="playerProgressButtonOnClick()">test</button>
       </div>
     </div>
-    <script src="./app.bundle.js?v=0.2.29"></script>
+    <script src="./app.bundle.js?v=0.3.20"></script>
   </body>
 </html>
