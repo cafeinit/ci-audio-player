@@ -10494,7 +10494,7 @@ if(false) {
 /**
  * @fileoverview CIAudioPlayer
  * @author burning <www.cafeinit.com>
- * @version 2018.03.01
+ * @version 2018.03.05
  */
 
 const CIAudioPlayerCore = __webpack_require__(9)
@@ -10565,8 +10565,8 @@ class CIAudioPlayer {
       }
     }
 
-    player.onPlaying = (evt, time) => {
-      console.log('TRACK PLAYING', track.duration - time, evt)
+    player.onPlaying = (evt, time, duration) => {
+      console.log('TRACK PLAYING', duration - time, duration, evt)
       // console.log('TRACK PLAYING', evt)
       // if (typeof this.onTrackPlaying === 'function') {
       //   this.onTrackPlaying(this.index, track, time)
@@ -10623,6 +10623,13 @@ class CIAudioPlayer {
     if (typeof this.onStop === 'function') {
       this.onStop(this.index)
     }
+  }
+
+  /**
+   * @param {Number} progress [0, 1]
+   */
+  gotoAndPlay(progress) {
+    this.player.gotoAndPlay(progress)
   }
 
   initTracks(index) {
@@ -10903,6 +10910,11 @@ window.playerPrevButtonOnClick = () => {
 window.playerNextButtonOnClick = () => {
   console.log('playerPauseButtonOnClick')
   myPlayer.playNext()
+}
+
+window.playerProgressButtonOnClick = () => {
+  console.log('playerProgressButtonOnClick', 0.5)
+  myPlayer.gotoAndPlay(0.5)
 }
 
 
@@ -11486,7 +11498,7 @@ module.exports = function (css) {
 /**
  * @fileoverview CIAudioPlayerCore
  * @author burning <www.cafeinit.com>
- * @version 2018.03.01
+ * @version 2018.03.05
  */
 
 // http://www.w3school.com.cn/tags/html_ref_audio_video_dom.asp
@@ -11494,40 +11506,40 @@ module.exports = function (css) {
 // 只是简单地模拟播放过程
 class CIAudioPlayerCore {
   constructor() {
-    this.getAudio()
-    // console.log('CIAudioPlayerCore.audio', this.audio)
+    // this.getPlayer()
+    // console.log('CIAudioPlayerCore.player', this.player)
     this.onPlay = null
     this.onPlaying = null
     this.onEnded = null
     this.onError = null
   }
 
-  getAudio() {
-    if (!this.audio) {
-      this.audio = new Audio()
+  getPlayer() {
+    if (!this.player) {
+      this.player = new Audio()
     }
-    return this.audio
+    return this.player
   }
 
   play(track) {
-    let audio = this.getAudio()
+    let player = this.getPlayer()
 
-    audio.onplay = evt => {
+    player.onplay = evt => {
       console.log('CIAudioPlayerCore.onplay', evt)
       if (typeof this.onPlay === 'function') {
         this.onPlay(evt)
       }
     }
 
-    audio.ontimeupdate = evt => {
+    player.ontimeupdate = evt => {
       // console.log('CIAudioPlayerCore.ontimeupdate', evt)
       if (typeof this.onPlaying === 'function') {
-        this.onPlaying(evt, audio.currentTime)
+        this.onPlaying(evt, player.currentTime, player.duration)
       }
     }
 
     // 当音频已暂停时
-    audio.onpause = evt => {
+    player.onpause = evt => {
       console.log('CIAudioPlayerCore.onpause', evt)
       // if (typeof onEnded === 'function') {
       //   onEnded(evt)
@@ -11535,29 +11547,37 @@ class CIAudioPlayerCore {
     }
 
     // 当目前的播放列表已结束时
-    audio.onended = evt => {
+    player.onended = evt => {
       console.log('CIAudioPlayerCore.onended', evt)
       if (typeof this.onEnded === 'function') {
         this.onEnded(evt)
       }
     }
 
-    audio.onerror = evt => {
+    player.onerror = evt => {
       console.log('CIAudioPlayerCore.onerror', evt)
       if (typeof this.onEnded === 'function') {
         this.onEnded(evt)
       }
     }
 
-    if (track.src && track.src !== audio.src) {
-      audio.src = track.src
-      audio.play()
+    if (track.src && track.src !== player.currentSrc) {
+      player.src = track.src
+      player.play()
     }
   }
 
   stop() {
-    let audio = this.getAudio()
+    let audio = this.getPlayer()
     audio.pause()
+  }
+
+  /**
+   * @param {Number} progress [0, 1]
+   */
+  gotoAndPlay(progress) {
+    console.log('gotoAndPlay', progress, this.player.duration * progress)
+    this.player.currentTime = this.player.duration * progress
   }
 }
 

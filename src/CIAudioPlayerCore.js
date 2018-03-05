@@ -9,7 +9,7 @@
 // 只是简单地模拟播放过程
 class CIAudioPlayerCore {
   constructor() {
-    this.getAudio()
+    // this.getPlayer()
     // console.log('CIAudioPlayerCore.player', this.player)
     this.onPlay = null
     this.onPlaying = null
@@ -37,7 +37,7 @@ class CIAudioPlayerCore {
     player.ontimeupdate = evt => {
       // console.log('CIAudioPlayerCore.ontimeupdate', evt)
       if (typeof this.onPlaying === 'function') {
-        this.onPlaying(evt, player.currentTime)
+        this.onPlaying(evt, player.currentTime, player.duration)
       }
     }
 
@@ -71,8 +71,16 @@ class CIAudioPlayerCore {
   }
 
   stop() {
-    let audio = this.getAudio()
+    let audio = this.getPlayer()
     audio.pause()
+  }
+
+  /**
+   * @param {Number} progress [0, 1]
+   */
+  gotoAndPlay(progress) {
+    console.log('gotoAndPlay', progress, this.player.duration * progress)
+    this.player.currentTime = this.player.duration * progress
   }
 }
 

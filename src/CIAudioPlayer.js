@@ -72,8 +72,8 @@ class CIAudioPlayer {
       }
     }
 
-    player.onPlaying = (evt, time) => {
-      console.log('TRACK PLAYING', track.duration - time, evt)
+    player.onPlaying = (evt, time, duration) => {
+      console.log('TRACK PLAYING', duration - time, duration, evt)
       // console.log('TRACK PLAYING', evt)
       // if (typeof this.onTrackPlaying === 'function') {
       //   this.onTrackPlaying(this.index, track, time)
@@ -130,6 +130,13 @@ class CIAudioPlayer {
     if (typeof this.onStop === 'function') {
       this.onStop(this.index)
     }
+  }
+
+  /**
+   * @param {Number} progress [0, 1]
+   */
+  gotoAndPlay(progress) {
+    this.player.gotoAndPlay(progress)
   }
 
   initTracks(index) {

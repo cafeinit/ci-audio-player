@@ -173,3 +173,8 @@ window.playerNextButtonOnClick = () => {
   console.log('playerPauseButtonOnClick')
   myPlayer.playNext()
 }
+
+window.playerProgressButtonOnClick = () => {
+  console.log('playerProgressButtonOnClick', 0.5)
+  myPlayer.gotoAndPlay(0.5)
+}
