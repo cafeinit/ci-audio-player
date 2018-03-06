@@ -9,8 +9,8 @@ import $ from 'jquery'
 import { CIAudioPlayer, CIPlayList } from '../../dist/CIAudioPlayer'
 import './style.less'
 
-console.log('CIAudioPlayer', typeof CIAudioPlayer, CIAudioPlayer)
-console.log('CIPlayList', typeof CIPlayList, CIPlayList)
+// console.log('CIAudioPlayer', typeof CIAudioPlayer, CIAudioPlayer)
+// console.log('CIPlayList', typeof CIPlayList, CIPlayList)
 
 const myPlayList = new CIPlayList()
 const myPlayer = new CIAudioPlayer()

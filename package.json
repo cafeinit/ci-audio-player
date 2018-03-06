@@ -1,9 +1,10 @@
 {
   "name": "ci-audio-player",
-  "version": "0.0.1",
+  "version": "0.4.9",
   "description": "CafeInit AudioPlayer",
-  "main": "index.js",
+  "main": "dist/ci-audio-player.js",
   "scripts": {
+    "build": "webpack --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

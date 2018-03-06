@@ -11,13 +11,13 @@ const config = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'CIAudioPlayer.js',
-    library: {
-      root: 'CIAudioPlayer',
-      amd: 'ci-audio-player',
-      commonjs: 'ci-common-audio-player'
-    },
-    // library: 'CIAudioPlayer',
+    filename: 'ci-audio-player.js',
+    // library: {
+    //   root: 'CIAudioPlayer',
+    //   amd: 'ci-audio-player',
+    //   commonjs: 'ci-common-audio-player'
+    // },
+    library: 'CIAudioPlayer',
     libraryTarget: 'umd'
   },
 
