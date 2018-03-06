@@ -21,13 +21,7 @@
   },
   "homepage": "https://github.com/cafeinit/ci-audio-player#readme",
   "devDependencies": {
-    "css-loader": "^0.28.10",
-    "less": "^3.0.1",
-    "less-loader": "^4.0.6",
-    "style-loader": "^0.20.2",
-    "webpack": "^4.0.1"
-  },
-  "dependencies": {
-    "jquery": "^3.3.1"
+    "webpack": "^4.0.1",
+    "webpack-cli": "^2.0.10"
   }
 }

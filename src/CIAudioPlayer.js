@@ -4,9 +4,9 @@
  * @version 2018.03.05
  */
 
-const CIAudioPlayerCore = require('./CIAudioPlayerCore')
+import CIAudioPlayerCore from './CIAudioPlayerCore'
 
-class CIAudioPlayer {
+export default class CIAudioPlayer {
   constructor() {
     this.playList = null  // 播放列表
     this.tracks = []      // 实际播放的曲目
@@ -96,7 +96,7 @@ class CIAudioPlayer {
     }
 
     player.onEnded = evt => {
-      console.log('TRACK Ended', evt)
+      // console.log('TRACK Ended', evt)
       this.playNext()
     }
 
@@ -185,5 +185,3 @@ class CIAudioPlayer {
     return this.tracks[index] || null
   }
 }
-
-module.exports = CIAudioPlayer

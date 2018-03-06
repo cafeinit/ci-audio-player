@@ -63,11 +63,17 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,i){ true?module.exports=i():"function"==typeof define&&define.amd?define([],i):"object"==typeof exports?exports["ci-common-audio-player"]=i():t.CIAudioPlayer=i()}(window,function(){return function(t){var i={};function e(s){if(i[s])return i[s].exports;var n=i[s]={i:s,l:!1,exports:{}};return t[s].call(n.exports,n,n.exports,e),n.l=!0,n.exports}return e.m=t,e.c=i,e.d=function(t,i,s){e.o(t,i)||Object.defineProperty(t,i,{configurable:!1,enumerable:!0,get:s})},e.r=function(t){Object.defineProperty(t,"__esModule",{value:!0})},e.n=function(t){var i=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(i,"a",i),i},e.o=function(t,i){return Object.prototype.hasOwnProperty.call(t,i)},e.p="",e(e.s=0)}([function(t,i,e){"use strict";e.r(i);class s{constructor(){this.onPlay=null,this.onPlaying=null,this.onEnded=null,this.onError=null}getPlayer(){return this.player||(this.player=new Audio),this.player}play(t){let i=this.getPlayer();i.onplay=(t=>{"function"==typeof this.onPlay&&this.onPlay(t,i.currentTime||0,i.duration||0)}),i.ontimeupdate=(t=>{"function"==typeof this.onPlaying&&this.onPlaying(t,i.currentTime||0,i.duration||0)}),i.onended=(t=>{"function"==typeof this.onEnded&&this.onEnded(t)}),i.onerror=(t=>{"function"==typeof this.onError&&this.onError(t)}),t.src&&t.src!==i.currentSrc&&(i.src=t.src),console.log("CIAudioPlayerCore.play"),i.play()}pause(){this.getPlayer().pause()}goto(t){let i=this.getPlayer();i.currentTime=i.duration*t||0}}class n{constructor(){this.playList=null,this.tracks=[],this.index=0,this.mode=2,this.isLoop=!0,this.isPlaying=!1,this.currentTime=0,this.duration=0,this.progress=0,this.player=new s,this.onPause=null,this.onTrackPlay=null,this.onTrackPlaying=null}setPlayList(t){this.playList=t,this.initTracks()}setMode(t){this.mode=t,this.initTracks()}setLoop(t){this.isLoop=t}play(t){"number"==typeof t?(this.index=parseInt(t)||0,this.playList.setCurrentIndex(t)):this.playList.setCurrentIndex(this.index),1===this.mode&&(this.index=0,this.initTracks());let i=this.getTrack(this.index);if(!i)return void("function"==typeof this.onError&&this.onError(`Track ${t} undefinded`));let e=this.player;e.onPlay=((t,e,s)=>{this.isPlaying=!0,this.currentTime=e,this.duration=s,this.progress=0,"function"==typeof this.onTrackPlay&&this.onTrackPlay(this.index,i)}),e.onPlaying=((t,e,s)=>{if("function"==typeof this.onTrackPlaying){let t=0;s>0&&(t=(t=e/s)>1?1:t),this.currentTime=e,this.duration=s,this.progress=t,this.onTrackPlaying(this.index,i,{currentTime:e,duration:s,progress:t})}}),e.onEnded=(t=>{this.playNext()}),e.onError=(t=>{"function"==typeof this.onError&&this.onError(this.index,t)}),e.play(i)}playPrev(){let t=this.index-1;t<0?this.isLoop?(t=this.tracks.length-1,this.index=t,this.play()):this.stop():(this.index=t,this.play())}playNext(){let t=this.index+1;t>=this.tracks.length?this.isLoop?(t=0,this.index=t,this.play()):this.stop():(this.index=t,this.play())}pause(){this.player.pause(),this.isPlaying=!1,"function"==typeof this.onPause&&this.onPause(this.index)}gotoAndPlay(t){this.player.goto(t)}initTracks(t){1===this.mode?this.tracks=[this.playList.getCurrentItem()]:2===this.mode?this.tracks=this.playList.getItems():3===this.mode&&(this.tracks=this.playList.getItems(!0))}getTrack(t){return this.tracks[t]||null}}class r{constructor(){this.index=0,this.list=[]}getItem(t){return this.list[t]||null}getCurrentItem(){return this.getItem(this.index)}getItems(t){return[...this.list]}setItem(t,i){t=(t=t<0?0:t)>this.list.length?this.list.length:t,this.list[t]=i}setCurrentIndex(t){this.index=t,this.list.forEach((i,e)=>{i.is_actived=e===t})}addItem(t){t._key=parseInt(1e8*Math.random()),this.list.push(t)}removeItem(t){this.list.splice(t,1)}}e.d(i,"CIAudioPlayer",function(){return n}),e.d(i,"CIAudioPlayerCore",function(){return s}),e.d(i,"CIPlayList",function(){return r})}])});
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10438,11 +10444,11 @@ return jQuery;
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(5);
+var content = __webpack_require__(4);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -10456,7 +10462,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(7)(content, options);
+var update = __webpack_require__(6)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -10488,296 +10494,33 @@ if(false) {
 }
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * @fileoverview CIAudioPlayer
- * @author burning <www.cafeinit.com>
- * @version 2018.03.05
- */
-
-const CIAudioPlayerCore = __webpack_require__(9)
-
-class CIAudioPlayer {
-  constructor() {
-    this.playList = null  // 播放列表
-    this.tracks = []      // 实际播放的曲目
-    this.index = 0        // 当前播放的曲目index
-    this.mode = 2         // 1:单曲播放 2:顺序播放 3:随机播放
-    this.isLoop = true    // 是否循环播放
-    this.isPlaying = false
-    this.currentTime = 0
-    this.duration = 0
-    this.progress = 0
-
-    this.player = new CIAudioPlayerCore()
-
-    this.onPause = null
-    this.onTrackPlay = null
-    this.onTrackPlaying = null
-  }
-
-  setPlayList(list) {
-    this.playList = list
-    this.initTracks()
-  }
-
-  setMode(val) {
-    this.mode = val
-    this.initTracks()
-  }
-
-  setLoop(val) {
-    this.isLoop = val
-  }
-
-  /**
-   * @param {Number} index PlayList的当前索引(点击PlayList的播放键)
-   */
-  play(index) {
-    if (typeof index === 'number') {
-      this.index = parseInt(index) || 0
-      this.playList.setCurrentIndex(index)
-    }
-    else {
-      this.playList.setCurrentIndex(this.index)
-    }
-
-    // 单曲模式track中只有1条数据
-    if (this.mode === 1) {
-      this.index = 0
-      this.initTracks()
-    }
-
-    let track = this.getTrack(this.index)
-    if (!track) {
-      // console.log('track', index, 'undefinded')
-      if (typeof this.onError === 'function') {
-        this.onError(`Track ${index} undefinded`)
-      }
-      return
-    }
-
-    let player = this.player
-    player.onPlay = (evt, currentTime, duration) => {
-      this.isPlaying = true
-      this.currentTime = currentTime
-      this.duration = duration
-      this.progress = 0
-      // console.log('TRACK PLAY', this.index, track.title, evt)
-      if (typeof this.onTrackPlay === 'function') {
-        this.onTrackPlay(this.index, track)
-      }
-    }
-
-    player.onPlaying = (evt, currentTime, duration) => {
-      // console.log('TRACK PLAYING', duration - time, duration, evt)
-      if (typeof this.onTrackPlaying === 'function') {
-        let progress = 0
-        if (duration > 0) {
-          progress = currentTime / duration
-          progress = progress > 1 ? 1 : progress
-        }
-        this.currentTime = currentTime
-        this.duration = duration
-        this.progress = progress
-        this.onTrackPlaying(this.index, track,
-          { currentTime, duration, progress }
-        )
-      }
-    }
-
-    player.onEnded = evt => {
-      console.log('TRACK Ended', evt)
-      this.playNext()
-    }
-
-    player.onError = evt => {
-      if (typeof this.onError === 'function') {
-        this.onError(this.index, evt)
-      }
-    }
-
-    player.play(track)
-  }
-
-  playPrev() {
-    let index = this.index - 1
-    if (index < 0) {
-      if (this.isLoop) {
-        index = this.tracks.length - 1
-        this.index = index
-        this.play()
-      }
-      else {
-        this.stop()
-      }
-    }
-    else {
-      this.index = index
-      this.play()
-    }
-  }
-
-  playNext() {
-    let index = this.index + 1
-    if (index >= this.tracks.length) {
-      if (this.isLoop) {
-        index = 0
-        this.index = index
-        this.play()
-      }
-      else {
-        this.stop()
-      }
-    }
-    else {
-      this.index = index
-      this.play()
-    }
-  }
-
-  pause() {
-    this.player.pause()
-    this.isPlaying = false
-    if (typeof this.onPause === 'function') {
-      this.onPause(this.index)
-    }
-  }
-
-  /**
-   * @param {Number} progress [0, 1]
-   */
-  gotoAndPlay(progress) {
-    // if (this.isPlaying) {
-    //   console.log('goto')
-    //   this.player.goto(progress)
-    // }
-    // else {
-    //   console.log('gotoAndPlay')
-    //   this.play({ progress })
-    // }
-    this.player.goto(progress)
-  }
-
-  initTracks(index) {
-    if (this.mode === 1) {    // 单曲
-      this.tracks = [ this.playList.getCurrentItem() ]
-    }
-    else if (this.mode === 2) {   // 顺序
-      this.tracks = this.playList.getItems()
-    }
-    else if (this.mode === 3) {   // 随机
-      this.tracks = this.playList.getItems(true)
-    }
-    // console.log('CIAudioPlayer.initTracks', this.mode, this.playList, this.tracks)
-  }
-
-  getTrack(index) {
-    return this.tracks[index] || null
-  }
-}
-
-module.exports = CIAudioPlayer
-
-
-/***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-/**
- * @fileoverview CIPlayList
- * @author burning <www.cafeinit.com>
- * @version 2018.03.01
- */
-
-class CIPlayList {
-  constructor() {
-    this.index = 0
-    this.list = []
-  }
-
-  getItem(index) {
-    return this.list[index] || null
-  }
-
-  getCurrentItem() {
-    return this.getItem(this.index)
-  }
-
-  getItems(isRandom) {
-    if (isRandom) {
-      return [ ...this.list ]
-    }
-    else {
-      return [ ...this.list ]
-    }
-  }
-
-  setItem(index, item) {
-    index = (index < 0) ? 0 : index
-    index = (index > this.list.length) ? this.list.length : index
-    this.list[index] = item
-  }
-
-  setCurrentIndex(index) {
-    // console.log('CIPlayList.setCurrentIndex', index)
-    this.index = index
-    this.list.forEach((item, i) => {
-      if (i === index) {
-        item.is_actived = true
-      }
-      else {
-        item.is_actived = false
-      }
-    })
-  }
-
-  addItem(item) {
-    item._key = parseInt(Math.random() * 100000000)
-    this.list.push(item)
-  }
-
-  removeItem(index) {
-    this.list.splice(index, 1)
-  }
-
-  // insertItem(index, item) {
-  //
-  // }
-}
-
-module.exports = CIPlayList
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_CIAudioPlayer__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_CIAudioPlayer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__src_CIAudioPlayer__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_CIPlayList__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_CIPlayList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__src_CIPlayList__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__style_less__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__style_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__style_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dist_CIAudioPlayer__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dist_CIAudioPlayer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__dist_CIAudioPlayer__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__style_less__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__style_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__style_less__);
 /**
  * @fileoverview app
  * @author burning <www.cafeinit.com>
- * @version 2018.03.01
+ * @version 2018.03.06
  */
 
 
+// import { CIAudioPlayer, CIPlayList } from '../../src/index'
 
 
 
+console.log('CIAudioPlayer', typeof __WEBPACK_IMPORTED_MODULE_1__dist_CIAudioPlayer__["CIAudioPlayer"], __WEBPACK_IMPORTED_MODULE_1__dist_CIAudioPlayer__["CIAudioPlayer"])
+console.log('CIPlayList', typeof __WEBPACK_IMPORTED_MODULE_1__dist_CIAudioPlayer__["CIPlayList"], __WEBPACK_IMPORTED_MODULE_1__dist_CIAudioPlayer__["CIPlayList"])
 
-const myPlayList = new __WEBPACK_IMPORTED_MODULE_2__src_CIPlayList___default.a()
-const myPlayer = new __WEBPACK_IMPORTED_MODULE_1__src_CIAudioPlayer___default.a()
+const myPlayList = new __WEBPACK_IMPORTED_MODULE_1__dist_CIAudioPlayer__["CIPlayList"]()
+const myPlayer = new __WEBPACK_IMPORTED_MODULE_1__dist_CIAudioPlayer__["CIAudioPlayer"]()
 
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
   myPlayList.addItem({
@@ -10949,10 +10692,10 @@ window.playerProgressButtonOnClick = () => {
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(6)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // imports
 
 
@@ -10963,7 +10706,7 @@ exports.push([module.i, "/**\n * @fileoverview style\n * @author burning <www.ca
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports) {
 
 /*
@@ -11045,7 +10788,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -11111,7 +10854,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(8);
+var	fixUrls = __webpack_require__(7);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -11427,7 +11170,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports) {
 
 
@@ -11519,99 +11262,6 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-/**
- * @fileoverview CIAudioPlayerCore
- * @author burning <www.cafeinit.com>
- * @version 2018.03.05
- */
-
-// http://www.w3school.com.cn/tags/html_ref_audio_video_dom.asp
-
-// 只是简单地模拟播放过程
-class CIAudioPlayerCore {
-  constructor() {
-    // this.getPlayer()
-    // console.log('CIAudioPlayerCore.player', this.player)
-    this.onPlay = null
-    this.onPlaying = null
-    this.onEnded = null
-    this.onError = null
-  }
-
-  getPlayer() {
-    if (!this.player) {
-      this.player = new Audio()
-    }
-    return this.player
-  }
-
-  play(track) {
-    let player = this.getPlayer()
-
-    player.onplay = evt => {
-      // console.log('CIAudioPlayerCore.onplay', evt)
-      if (typeof this.onPlay === 'function') {
-        this.onPlay(evt, player.currentTime || 0, player.duration || 0)
-      }
-    }
-
-    player.ontimeupdate = evt => {
-      // console.log('CIAudioPlayerCore.ontimeupdate', evt)
-      if (typeof this.onPlaying === 'function') {
-        this.onPlaying(evt, player.currentTime || 0, player.duration || 0)
-      }
-    }
-
-    // 当音频已暂停时
-    // player.onpause = evt => {
-    //   console.log('CIAudioPlayerCore.onpause', evt)
-    // }
-
-    // 当目前的播放列表已结束时
-    player.onended = evt => {
-      // console.log('CIAudioPlayerCore.onended', evt)
-      if (typeof this.onEnded === 'function') {
-        this.onEnded(evt)
-      }
-    }
-
-    player.onerror = evt => {
-      // console.log('CIAudioPlayerCore.onerror', evt)
-      if (typeof this.onError === 'function') {
-        this.onError(evt)
-      }
-    }
-
-    if (track.src && track.src !== player.currentSrc) {
-      player.src = track.src
-    }
-
-    console.log('CIAudioPlayerCore.play')
-    player.play()
-  }
-
-  pause() {
-    let player = this.getPlayer()
-    player.pause()
-  }
-
-  /**
-   * @param {Number} progress [0, 1]
-   */
-  goto(progress) {
-    let player = this.getPlayer()
-    player.currentTime = player.duration * progress || 0
-    // console.log('CIAudioPlayerCore.goto', progress, player.currentTime)
-  }
-}
-
-module.exports = CIAudioPlayerCore
 
 
 /***/ })

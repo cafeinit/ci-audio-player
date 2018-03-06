@@ -1,13 +1,16 @@
 /**
  * @fileoverview app
  * @author burning <www.cafeinit.com>
- * @version 2018.03.01
+ * @version 2018.03.06
  */
 
 import $ from 'jquery'
-import CIAudioPlayer from '../../src/CIAudioPlayer'
-import CIPlayList from '../../src/CIPlayList'
+// import { CIAudioPlayer, CIPlayList } from '../../src/index'
+import { CIAudioPlayer, CIPlayList } from '../../dist/CIAudioPlayer'
 import './style.less'
+
+console.log('CIAudioPlayer', typeof CIAudioPlayer, CIAudioPlayer)
+console.log('CIPlayList', typeof CIPlayList, CIPlayList)
 
 const myPlayList = new CIPlayList()
 const myPlayer = new CIAudioPlayer()

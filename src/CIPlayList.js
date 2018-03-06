@@ -1,10 +1,10 @@
 /**
  * @fileoverview CIPlayList
  * @author burning <www.cafeinit.com>
- * @version 2018.03.01
+ * @version 2018.03.06
  */
 
-class CIPlayList {
+export default class CIPlayList {
   constructor() {
     this.index = 0
     this.list = []
@@ -59,5 +59,3 @@ class CIPlayList {
   //
   // }
 }
-
-module.exports = CIPlayList

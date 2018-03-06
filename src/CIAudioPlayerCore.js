@@ -1,13 +1,12 @@
 /**
  * @fileoverview CIAudioPlayerCore
  * @author burning <www.cafeinit.com>
- * @version 2018.03.05
+ * @version 2018.03.06
  */
 
 // http://www.w3school.com.cn/tags/html_ref_audio_video_dom.asp
 
-// 只是简单地模拟播放过程
-class CIAudioPlayerCore {
+export default class CIAudioPlayerCore {
   constructor() {
     // this.getPlayer()
     // console.log('CIAudioPlayerCore.player', this.player)
@@ -83,5 +82,3 @@ class CIAudioPlayerCore {
     // console.log('CIAudioPlayerCore.goto', progress, player.currentTime)
   }
 }
-
-module.exports = CIAudioPlayerCore
