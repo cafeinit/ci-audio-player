@@ -5,9 +5,9 @@
  */
 
 import $ from 'jquery'
-// import { CIAudioPlayer, CIPlayList } from '../../src/index'
+import { CIAudioPlayer, CIPlayList } from '../../src/index'
 // import { CIAudioPlayer, CIPlayList } from '../../dist/ci-audio-player'
-import { CIAudioPlayer, CIPlayList } from 'ci-audio-player'
+// import { CIAudioPlayer, CIPlayList } from 'ci-audio-player'
 import './style.less'
 
 // console.log('CIAudioPlayer', typeof CIAudioPlayer, CIAudioPlayer)
@@ -40,6 +40,9 @@ $(() => {
     // duration: parseInt(0.05 * 60),
     artist: 'Jeff Pianki',
   })
+
+  let item = myPlayList.getLastItem()
+  console.log('test getLastItem', item.index, item)
 
   myPlayList.setCurrentIndex(0)
 
