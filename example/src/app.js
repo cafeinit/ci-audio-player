@@ -6,7 +6,8 @@
 
 import $ from 'jquery'
 // import { CIAudioPlayer, CIPlayList } from '../../src/index'
-import { CIAudioPlayer, CIPlayList } from '../../dist/CIAudioPlayer'
+// import { CIAudioPlayer, CIPlayList } from '../../dist/ci-audio-player'
+import { CIAudioPlayer, CIPlayList } from 'ci-audio-player'
 import './style.less'
 
 // console.log('CIAudioPlayer', typeof CIAudioPlayer, CIAudioPlayer)

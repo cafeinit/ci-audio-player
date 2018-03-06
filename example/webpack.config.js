@@ -1,12 +1,13 @@
 /**
  * @fileoverview webpack.config
  * @author burning <www.cafeinit.com>
- * @version 2018.03.02
+ * @version 2018.03.06
  */
 
 const path = require('path')
 
 const config = {
+  mode: 'development',
   entry: './src/app.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -30,7 +31,9 @@ const config = {
         ]
       },
     ]
-  }
+  },
+
+  devtool: 'inline-source-map',
 }
 
 module.exports = config
