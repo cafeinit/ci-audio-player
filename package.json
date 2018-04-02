@@ -1,6 +1,6 @@
 {
   "name": "ci-audio-player",
-  "version": "0.4.11",
+  "version": "0.4.12",
   "description": "CafeInit AudioPlayer",
   "main": "dist/ci-audio-player.js",
   "scripts": {

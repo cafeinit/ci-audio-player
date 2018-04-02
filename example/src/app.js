@@ -71,7 +71,7 @@ $(() => {
     render()
   }
 
-  myPlayer.onListEnd = (index, track) => {
+  myPlayer.onListEnd = (index) => {
     console.log('onListEnd', index)
   }
 
