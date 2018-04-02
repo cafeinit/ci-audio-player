@@ -23,6 +23,7 @@ export default class CIAudioPlayer {
     this.onPause = null
     this.onTrackPlay = null
     this.onTrackPlaying = null
+    this.onListEnd = null
   }
 
   setPlayList(list) {
@@ -150,6 +151,13 @@ export default class CIAudioPlayer {
     this.isPlaying = false
     if (typeof this.onPause === 'function') {
       this.onPause(this.index)
+    }
+  }
+
+  stop() {
+    this.isPlaying = false
+    if (typeof this.onListEnd === 'function') {
+      this.onListEnd(this.index)
     }
   }
 
